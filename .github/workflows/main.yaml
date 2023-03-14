@@ -30,10 +30,20 @@ jobs:
            nohup rclone --config './rclone.conf' mount 'Drive:/' "MyDrive/"  --daemon           
       - name: Downloading link file
         run: |
-          wget -qq https://gist.github.com/BlackFoxy616/97e8a848878c7edde0e7653aacab95af/raw/846e94445577b6951e894b05657abb9dff59559e/links(tor).txt -O links.txt
+          wget -qq https://gist.github.com/BlackFoxy616/97e8a848878c7edde0e7653aacab95af/raw/links.txt -O links.txt
       - name: Running the Script
         run: |
           python main.py
       - name: Moving files
         run: |
            rclone --config "./rclone.conf" move "Drive:/" "TD:TORRENT/" -vP --delete-empty-src-dirs --drive-server-side-across-configs=true 
+      - name: Running the Script
+        run: |
+          rm links.txt & nano links.txt
+        - name: Deploy
+        uses: exuanbo/actions-deploy-gist@v1
+        with:
+          token: ${{ secrets.TOKEN }}
+          gist_id: 97e8a848878c7edde0e7653aacab95af
+          file_path: links.txt
+          file_type: text
