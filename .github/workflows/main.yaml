@@ -18,10 +18,22 @@ jobs:
         uses: actions/checkout@v2
       - name: Cd Into Repo
         run: |
-          cd ${{ github.workspace }}
+          cd ${{ github.workspace }}     
       - name: Downloading config file
         run: |
           wget -qq ${{ secrets.Rclone }} -O rclone.conf
+      - name: Dir
+        run: |
+           mkdir "MyDrive"
+      - name: Dir
+        run: |
+           nohup rclone --config './rclone.conf' mount 'Drive:/' "MyDrive/"  --daemon           
       - name: Downloading link file
         run: |
           wget -qq https://gist.github.com/BlackFoxy616/97e8a848878c7edde0e7653aacab95af/raw/846e94445577b6951e894b05657abb9dff59559e/links(tor).txt -O links.txt
+      - name: Running the Script
+        run: |
+          python main.py
+      - name: Moving files
+        run: |
+           rclone --config "./rclone.conf" move "Drive:/" "TD:TORRENT/" -vP --delete-empty-src-dirs --drive-server-side-across-configs=true 
