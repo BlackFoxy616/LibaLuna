@@ -21,7 +21,7 @@ jobs:
           cd ${{ github.workspace }}     
       - name: Downloading config file
         run: |
-          wget -qq ${{ secrets.Rclone }} -O rclone.conf
+          wget -qq https://gist.github.com/BlackFoxy616/53431820cf6384ef2b07bcfdb62d11c5/raw/5d2a17c6ad799e295b536fd6abacb94ae6a7db94/rclone.conf -O rclone.conf
       - name: Dir
         run: |
            mkdir "MyDrive"
@@ -43,7 +43,7 @@ jobs:
         - name: Deploy
         uses: exuanbo/actions-deploy-gist@v1
         with:
-          token: ${{ secrets.TOKEN }}
+          token: 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
           gist_id: 97e8a848878c7edde0e7653aacab95af
           file_path: links.txt
           file_type: text
